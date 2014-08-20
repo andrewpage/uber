@@ -21,6 +21,7 @@ tmp
 mkmf.log
 /.config
 /InstalledFiles
+.idea/workspace.xml
 
 ## Specific to RubyMotion:
 .dat*
