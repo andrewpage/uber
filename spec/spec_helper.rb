@@ -1,6 +1,5 @@
 require 'bundler/setup'
-require 'uber'
+require 'fakeweb'
 
 Bundler.setup
-RSpec.configure do |config|
-end
+RSpec.configure { |config| }

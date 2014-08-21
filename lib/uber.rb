@@ -4,6 +4,7 @@ require 'uber/models/resource'
 require 'uber/models/product'
 require 'uber/models/location'
 require 'uber/models/price'
+require 'uber/models/time'
 
 require 'rest-client'
 require 'json'

@@ -1,6 +1,3 @@
-#curl -H 'Authorization: Token WOBR2u2P1Uajsf67MCf_m_EQ-eRwluKCwRu-o624' 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823'
-#curl 'https://api.uber.com/v1/products?latitude=37.7759792&longitude=-122.41823'
-
 module Uber
   class Client
     attr_reader :token, :options
@@ -27,7 +24,7 @@ module Uber
     ##
     # Estimates the price for a ride between one location and the other
     ##
-    def estimate_prices(start, destination)
+    def estimate_prices(start, destination, product = nil)
       params = {
         start_latitude: start.latitude,
         start_longitude: start.longitude,
@@ -38,11 +35,31 @@ module Uber
       result = get('estimates/price', params)['prices']
       prices = []
 
-      for price in result
-        prices << Uber::Price.new(price)
+      for hash in result
+        prices << Uber::Price.new(hash) if product && (product.display_name == price.display_name)
       end
 
       prices
+    end
+
+    ##
+    # Estimates the time until Uber arrives
+    ##
+    def estimate_time(start, product)
+      params = {
+          start_latitude: start.latitude,
+          start_longitude: start.longitude,
+          product_id: product.product_id
+      }
+
+      result = get('estimates/time', params)['times']
+      times = []
+
+      for hash in result
+        times << Uber::Time.new(hash)
+      end
+
+      times
     end
 
     private
